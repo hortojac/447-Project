@@ -1,5 +1,7 @@
 # EECS 447 Project
 
+https://people.eecs.ku.edu/~j242h828/eecs447/
+
 ### To-Do List
  - Create a new user database with the addition of SSN as the primary key, age, DOB, and phone number.
  - Create the product database for items being sold on the site.
