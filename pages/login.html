@@ -23,7 +23,7 @@
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-            input[type="text"], input[type="password"]{
+            input{
                 width: 100%;
                 padding: 12px 20px;
                 margin: 8px 0;
@@ -66,11 +66,11 @@
         <div class="center">
             <div class="container">
                 <h1>Login Form</h1>
-                <form id="login-form">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                <form id="login-form" action="./login.php" method="POST">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
 
-                    <label for="password">Password</label>
+                    <label for="password">Password:</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password">
 
                     <button type="submit">Login</button>
@@ -84,14 +84,14 @@
         </div>
         <script>
             function goToSignUpPage() {
-                window.location.href = "./sign-up.html";
+                window.location.href = "./sign_up.html";
             }
             var SignUpLink = document.getElementById('signup-link');
             SignUpLink.addEventListener('click', goToSignUpPage);
         </script>
         <script>
             function goToResetPage() {
-                window.location.href = "./reset.html";
+                window.location.href = "./password_reset_link.html";
             }
             var ResetLink = document.getElementById('reset-link');
             ResetLink.addEventListener('click', goToResetPage);
