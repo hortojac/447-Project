@@ -6,7 +6,6 @@ https://people.eecs.ku.edu/~j242h828/eecs447/
 - Create the main shop page that is connected to the "Shop Now" button on the homepage. This page should show the shop categories without requiring users to sign in.
 - Develop a cart system that allows users to add items to their cart and proceed to checkout.
 - Implement an email link for password reset and a new page for such with the database update. - **Half way Working**
----
 - Implement user authentication. Once the user signs in, the shop page should display personalized product recommendations and show items based on their previous search history.
 - Create shopping categories on the Shop Page for users to browse and search for products.
 - Implement a payment gateway that securely handles transactions and accepts major credit cards.
