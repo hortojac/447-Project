@@ -65,7 +65,12 @@
 		</script>
 		<script>
 			function goToSignUpPage() {
-				window.location.href = "./pages/sign-up.html";
+				window.location.href = "./pages/sign_up.html";
+			}
+		</script>
+		<script>
+			function goToShopPage() {
+				window.location.href = "./pages/shop_page.html";
 			}
 		</script>
 	</head>
@@ -73,7 +78,7 @@
 		<div class="container">
 			<h1>Welcome to iBuy</h1>
 			<p>Login or Sign Up for an account to start shopping today!</p>
-			<button class="shop-now-button">Shop Now</button>
+			<button class="shop-now-button" onClick="goToShopPage()">Shop Now</button>
 			<button class="sign-up-button" onclick="goToSignUpPage()">Sign Up</button>
 			<button class="login-button" onclick="goToLoginPage()">Login</button>
 		</div>
