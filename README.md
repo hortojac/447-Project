@@ -3,7 +3,6 @@
 https://people.eecs.ku.edu/~j242h828/eecs447/
 
 ### To-Do List
- - Create a new user database with the addition of SSN as the primary key, age, DOB, and phone number.
  - Create the product database for items being sold on the site.
  - Create the main shop page that is connected to the "Shop Now" button on the homepage. This page should show the shop categories without requiring users to sign in.
  - Implement user authentication. Once the user signs in, the shop page should display personalized product recommendations and show items based on their previous search    history.
