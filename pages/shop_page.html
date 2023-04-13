@@ -1,11 +1,102 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Shop Page</title>
+        <title>Shop Main Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 0;
+			padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1b4d89;
+            height: 150px;
+            margin: 0px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        .logo img {
+            height: 120px;
+            width: auto;
+        }
+        .search-bar form {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            height: 40px;
+            width: 600px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
+        }
+        .search-bar button {
+            height: 40px;
+            width: 40px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #6db784;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        button:hover{
+			opacity: 0.8;
+		}
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .profile img {
+            height: 120px;
+            width: auto;
+        }
+    </style>
     <body>
-        <h1>Shop Page</h1>
+        <header>
+            <div class="logo">
+                <a id="shop-home" href="#"><img src="../images/site_logo.png" alt="Site Logo"></a>
+            </div>
+            <div class="search-bar">
+                <form>
+                    <input type="text" placeholder="Search...">
+                    <button type="submit">Go</button>
+                </form>
+            </div>
+            <div class="profile">
+                <a id="profile-link" href="#"><img src="../images/profile_photo.png" alt="Profile Photo"></a>
+            </div>
+        </header>        
+        <nav>
+        </nav>
+        <main>
+        </main>
+        <script>
+            function goToShopHome() {
+                window.location.href = "../index.html";
+            }
+            var ShopHome = document.getElementById('shop-home');
+            ShopHome.addEventListener('click', goToShopHome);
+        </script>
+        <script>
+            function goToProfileSettings() {
+                window.location.href = "../index.html";
+            }
+            var ProfileSettings = document.getElementById('profile-link');
+            ProfileSettings.addEventListener('click', goToProfileSettings);
+        </script>
     </body>
 </html>
