@@ -3,6 +3,7 @@
 ### To-Do List
  - Create a new user database with the addition of SSN as the primary key, age, DOB, and phone number.
  - Create the product database for items being sold on the site.
+ 
  - Create the main shop page that is connected to the "Shop Now" button on the homepage. This page should show the shop categories without requiring users to sign in.
  - Develop a cart system that allows users to add items to their cart and proceed to checkout.
  - Implement an email link for password reset and a new page for such with the database update.
