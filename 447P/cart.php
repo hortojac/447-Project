@@ -14,7 +14,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iBuy</title>
+    <title>Cart</title>
     <link rel="icon" href="images/logo.png" class="">
     <!--bootstrap-->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -39,22 +39,22 @@ error_reporting(E_ALL);
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="main.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Products</a>
+          <a class="nav-link" href="display_all.php">Products</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Support</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-sharp fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
+          <a class="nav-link" href="cart.php"><i class="fa-sharp fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Total: $<?php total_cart_price(); ?></a>
         </li>
       </ul>
-      <form class="d-flex" action="" method="get">
+      <form class="d-flex" action="search_product.php" method="get">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
         <!-- <button class="btn btn-outline-light" type="submit">Search</button> -->
         <input type="submit" value ="Search" class="btn btn-outline-light" name="search_data_product">
@@ -62,6 +62,10 @@ error_reporting(E_ALL);
     </div>
   </div>
 </nav>
+
+
+<!-- calling cart function -->
+<?php cart(); ?>
 
 <!-- second child -->
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -79,51 +83,44 @@ error_reporting(E_ALL);
   <h3 class="text-center">Store</h3>
   <p class="text-center">Products</p>
 </div>
+<!-- Fourth table- item table -->
 
-<!-- fourth child -->
-<div class="row">
-  <div class="col-md-2 bg-secondary p-0">
-    <!-- side nav -->
-
-
-    <!-- Categories -->
-    <ul class="navbar-nav me-auto text-center">
-      <li class="nav-item bg-info">
-        <a href="#" class="nav-link text-light"><h4>Category</h4></a>
-      </li>
-
-      <?php
-      getcategory();
-      ?>
-    </ul>
-
-
-    <!-- Brands -->
-    <ul class="navbar-nav me-auto text-center">
-      <li class="nav-item bg-info">
-        <a href="#" class="nav-link text-light"><h4>Brands</h4></a>
-      </li>
-
-      <?php
-      getbrands();
-      ?>
-  </div>
-
-
-<div class="col-md-10">
-   <!-- products -->
+<div class="container">
     <div class="row">
-      <!-- Getting items from database -->
-      <?php
-    search_product();
-    get_unique_categories();   
-    get_unique_brand();
-  
-      ?>
-        <!-- row end -->
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Quanity</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product</td>
+                    <td><img src="images/logo.png" alt=""></td>
+                    <td><input type="text" name="" id=""></td>
+                    <td>9000</td>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <p>Update</p>
+                        <p>Remove</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- subtotal -->
+        <div class="d-flex flex-row-reverse mb-5">
+            <a href="main.php"><button class="bg-info p-2 border-2 m-1">Continue Shopping</button></a>
+            <a href="#"><button class="bg-info p-2 border-2 m-1">Checkout</button></a>
+            <h4 class="px-3 text-end m-1">Subtotal:$<strong class="text-primary">9000</strong></h4>
+        </div>
     </div>
-    <!-- col end -->
-  </div>
+
+</div>
 
 <!-- last child -->
 <div class="bg-info p-3 text-center">

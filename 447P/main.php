@@ -48,10 +48,10 @@ error_reporting(E_ALL);
           <a class="nav-link" href="#">Support</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-sharp fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
+          <a class="nav-link" href="cart.php"><i class="fa-sharp fa-solid fa-cart-shopping"></i><sup><?php cart_item(); ?></sup></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Total: $100</a>
+          <a class="nav-link" href="#">Total: $<?php total_cart_price(); ?></a>
         </li>
       </ul>
       <form class="d-flex" action="search_product.php" method="get">
