@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 if (isset($_POST['brand_insert'])) {
     // Get the brand title from the input field
     $cat_title = trim($_POST['brand_title']);
@@ -43,23 +42,17 @@ if (isset($_POST['brand_insert'])) {
         echo "Brand cannot be empty.";
     }
 }
-
 ?>
-
 
 <h2 class="text-center">Insert Brands</h2>
 
-
 <form action="" method="post" class="mb-2">
-<div class="input-group w-90 mb-3">
-    <span class="input-group-text bg-info"><i class="fa-solid fa-receipt"></i></span>
-    <input type="text" class="form-control" name="brand_title" id="floatingInputGroup1" placeholder="Brand Name">
-</div>
+    <div class="input-group w-90 mb-3">
+        <span class="input-group-text main-color text-color"><i class="fa-solid fa-receipt"></i></span>
+        <input type="text" class="form-control" name="brand_title" id="floatingInputGroup1" placeholder="Brand Name">
+    </div>
 
-<div class="input-group w-100 mb-2 m-auto">
-    <input type="submit" class="bg-info bg-info border-0 p-2" name="brand_insert" id="floatingInputGroup1" value="Add brand">
-    
-    <!-- <button class="bg-info p-2 m-3 border-0">Add Brand</button> -->
-</div>
-
+    <div class="input-group w-100 mb-2 m-auto">
+        <input type="submit" class="main-color text-color border-0 p-2 submit-item" name="brand_insert" id="floatingInputGroup1" value="Add brand">
+    </div>
 </form>

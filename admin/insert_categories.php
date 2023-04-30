@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 if (isset($_POST['insert_cat'])) {
     // Get the category title from the input field
     $cat_title = trim($_POST['cat_title']);
@@ -44,23 +43,16 @@ if (isset($_POST['insert_cat'])) {
         echo "Category title cannot be empty.";
     }
 }
-
 ?>
-
-
-
 
 <h2 class="text-center">Insert Categories</h2>
 
-
-
 <form action="" method="post" class="mb-2">
-<div class="input-group w-90 mb-2">
-    <span class="input-group-text bg-info" id="basic-addon1"><i class="fa-solid fa-receipt"></i></span>
-    <input type="text" class="form-control" name="cat_title" placeholder="Insert categories"
-     aria-label = "Categories" aria-describedby="basic-addon1">
-</div>
-<div class="input-group w-10 mb-2 m-auto">
-    <input type="submit" class="bg-info border-0 p-2 my-3" name="insert_cat" value= "Insert Categories"> 
-</div>
+    <div class="input-group w-90 mb-2">
+        <span class="input-group-text main-color text-color" id="basic-addon1"><i class="fa-solid fa-receipt"></i></span>
+        <input type="text" class="form-control" name="cat_title" placeholder="Insert categories" aria-label = "Categories" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group w-10 mb-2 m-auto">
+        <input type="submit" class="main-color text-color border-0 p-2 submit-item" name="insert_cat" value="Insert Categories">
+    </div>
 </form>

@@ -32,8 +32,8 @@ function getproducts(){
                         <p class='card-text'>$product_description</p>
                         <p class='card-text'>$$product_price</p>
 
-                        <a href='main.php?add_to_cart=$product_id' class='btn btn-primary'>Add to cart</a>
-                        <a href='#' class='btn btn-secondary'>More Info</a>
+                        <a href='main.php?add_to_cart=$product_id' class='btn btn-light btn-cart'>Add to cart</a>
+                        <a href='#' class='btn btn-light btn-info'>More Info</a>
                     </div>
                 </div>
             </div>";
@@ -68,8 +68,8 @@ function get_all_products(){
                         <h5 class='card-title'>$product_title</h5>
                         <p class='card-text'>$product_description</p>
                         <p class='card-text'>$$product_price</p>
-                        <a href='main.php?add_to_cart=$product_id' class='btn btn-primary'>Add to cart</a>
-                        <a href='#' class='btn btn-secondary'>More Info</a>
+                        <a href='main.php?add_to_cart=$product_id' class='btn btn-light btn-cart'>Add to cart</a>
+                        <a href='#' class='btn btn-light btn-info'>More Info</a>
                     </div>
                 </div>
             </div>";
@@ -78,13 +78,14 @@ function get_all_products(){
     }
 }
 
-
-//get specific category
+//get specific category using JOIN
 function get_unique_categories() {
     global $conn;
     if (isset($_GET['category'])) {
         $category_id = $_GET['category'];
-        $select_query = "SELECT * FROM `products` WHERE category_id = ?";
+        $select_query = "SELECT * FROM `products` 
+                         JOIN `categories` ON products.category_id = categories.category_id 
+                         WHERE products.category_id = ?";
         $stmt = mysqli_prepare($conn, $select_query);
         mysqli_stmt_bind_param($stmt, "i", $category_id);
         mysqli_stmt_execute($stmt);
@@ -108,8 +109,8 @@ function get_unique_categories() {
                             <h5 class='card-title'>$product_title</h5>
                             <p class='card-text'>$product_description</p>
                             <p class='card-text'>$$product_price</p>
-                            <a href='main.php?add_to_cart=$product_id' class='btn btn-primary'>Add to cart</a>
-                            <a href='#' class='btn btn-secondary'>More Info</a>
+                            <a href='main.php?add_to_cart=$product_id' class='btn btn-light btn-cart'>Add to cart</a>
+                            <a href='#' class='btn btn-light btn-info'>More Info</a>
                         </div>
                     </div>
                 </div>";
@@ -127,7 +128,9 @@ function get_unique_brand(){
     global $conn;
     if (isset($_GET['brand'])) {
         $brand_id = $_GET['brand'];
-        $select_query = "SELECT * FROM `products` WHERE brand_id = ?";
+        $select_query = "SELECT products.* FROM `products`
+                         JOIN `brands` ON products.brand_id = brands.brand_id
+                         WHERE products.brand_id = ?";
         $stmt = mysqli_prepare($conn, $select_query);
         mysqli_stmt_bind_param($stmt, "i", $brand_id);
         mysqli_stmt_execute($stmt);
@@ -151,8 +154,8 @@ function get_unique_brand(){
                             <h5 class='card-title'>$product_title</h5>
                             <p class='card-text'>$product_description</p>
                             <p class='card-text'>$$product_price</p>
-                            <a href='main.php?add_to_cart=$product_id' class='btn btn-primary'>Add to cart</a>
-                            <a href='#' class='btn btn-secondary'>More Info</a>
+                            <a href='main.php?add_to_cart=$product_id' class='btn btn-light btn-cart'>Add to cart</a>
+                            <a href='#' class='btn btn-light btn-info'>More Info</a>
                         </div>
                     </div>
                 </div>";
@@ -164,10 +167,6 @@ function get_unique_brand(){
     }
 }
 
-
-
-
-
 //left nav bar brands
 function getbrands(){
     global $conn;
@@ -178,10 +177,9 @@ function getbrands(){
     while($row_data=mysqli_fetch_assoc($result_brands)){
       $brand_title=$row_data['brand_title'];
       $brand_id=$row_data['brand_id'];
-      echo " <li class='nav-item'> <a href='main.php?brand=$brand_id' class='nav-link text-light'>$brand_title</a> </li>";
+      echo " <li class='nav-item'> <a href='main.php?brand=$brand_id' class='nav-link side-nav'>$brand_title</a> </li>";
     }
 }
-
 
 //left nav bar categories
 function getcategory(){
@@ -191,12 +189,11 @@ function getcategory(){
     while($row_data=mysqli_fetch_assoc($result_categories)){
     $category_title=$row_data['category_title'];
     $category_id=$row_data['category_id'];
-    echo " <li class='nav-item'> <a href='main.php?category=$category_id' class='nav-link text-light'>$category_title</a> </li>";
+    echo " <li class='nav-item'> <a href='main.php?category=$category_id' class='nav-link side-nav'>$category_title</a> </li>";
     }
 }
 
 //search products
-//getting products
 function search_product(){
     global $conn;
     if(isset($_GET['search_data_product'])){
@@ -225,8 +222,8 @@ function search_product(){
                 <h5 class='card-title'>$product_title</h5>
                 <p class='card-text'>$product_description</p>
                 <p class='card-text'>$$product_price</p>
-                <a href='main.php?add_to_cart=$product_id' class='btn btn-primary'>Add to cart</a>
-                <a href='#' class='btn btn-secondary'>More Info</a>
+                <a href='main.php?add_to_cart=$product_id' class='btn btn-light btn-cart'>Add to cart</a>
+                <a href='#' class='btn btn-light btn-info'>More Info</a>
             </div>
         </div>
     </div>";
@@ -252,8 +249,6 @@ function getIPAddress() {
 
 // $ip = getIPAddress();  
 // echo 'User Real IP Address - '.$ip;
-
-
 
 //cart function
 function cart(){
@@ -323,8 +318,6 @@ function total_cart_price(){
     }
     echo $total_price;
 }
-
-
 ?>
 
 
