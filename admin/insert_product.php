@@ -16,32 +16,32 @@ if (isset($_POST['insert_product'])) {
 
     // Accessing images
     $product_image1 = $_FILES['product_image1']['name'];
-    $product_image2 = $_FILES['product_image2']['name'];
-    $product_image3 = $_FILES['product_image3']['name'];
+    //$product_image2 = $_FILES['product_image2']['name'];
+    //$product_image3 = $_FILES['product_image3']['name'];
 
     // Image tmp name
     $temp_image1 = $_FILES['product_image1']['tmp_name'];
-    $temp_image2 = $_FILES['product_image2']['tmp_name'];
-    $temp_image3 = $_FILES['product_image3']['tmp_name'];
+    // $temp_image2 = $_FILES['product_image2']['tmp_name'];
+    // $temp_image3 = $_FILES['product_image3']['tmp_name'];
 
     // Check if empty
     if ($product_title == '' || $description == '' || $product_quantity == '' || $product_keywords == '' || $product_category == '' ||
-        $product_brands == '' || $product_price == '' || $product_image1 == '' || $product_image2 == '' || $product_image3 == '') {
+        $product_brands == '' || $product_price == '' || $product_image1 == '') {
         echo "<script>alert('All fields required')</script>";
         exit();
     } else {
         move_uploaded_file($temp_image1, "./product_images/$product_image1");
-        move_uploaded_file($temp_image2, "./product_images/$product_image2");
-        move_uploaded_file($temp_image3, "./product_images/$product_image3");
+        // move_uploaded_file($temp_image2, "./product_images/$product_image2");
+        // move_uploaded_file($temp_image3, "./product_images/$product_image3");
 
         // Prepare insert query
         $stmt = $conn->prepare("INSERT INTO `products` (product_title, product_quantity, product_description,
-        product_keywords, category_id, brand_id, product_image1, product_image2, product_image3,
-        product_price, date, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+        product_keywords, category_id, brand_id, product_image1,
+        product_price, date, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
 
         // Bind the parameters
-        $stmt->bind_param("sissiisssis", $product_title, $product_quantity, $description, $product_keywords, $product_category, $product_brands,
-            $product_image1, $product_image2, $product_image3, $product_price, $product_status);
+        $stmt->bind_param("sissiisis", $product_title, $product_quantity, $description, $product_keywords, $product_category, $product_brands,
+            $product_image1, $product_price, $product_status);
 
         // Execute the prepared statement
         $result_query = $stmt->execute();
@@ -114,22 +114,8 @@ if (isset($_POST['insert_product'])) {
 
         <!-- Image1 -->
         <div class="form-outline mb-4 w-50 m-auto">
-            <label for="product_image1" class="form-label">Item Image 1</label>
+            <label for="product_image1" class="form-label">Item Image</label>
             <input type="file" name= "product_image1" id="product_image1" class="form-control"
-            required="required">
-        </div>
-
-        <!-- Image2 -->
-        <div class="form-outline mb-4 w-50 m-auto">
-            <label for="product_image2" class="form-label">Item Image 1</label>
-            <input type="file" name= "product_image2" id="product_image2" class="form-control"
-            required="required">
-        </div>
-
-            <!-- Image3 -->
-            <div class="form-outline mb-4 w-50 m-auto">
-            <label for="product_image3" class="form-label">Item Image 1</label>
-            <input type="file" name= "product_image3" id="product_image3" class="form-control"
             required="required">
         </div>
 
