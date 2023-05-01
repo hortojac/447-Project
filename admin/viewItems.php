@@ -70,7 +70,7 @@ if (isset($_POST['delete_product'])) {
                             $product_quantity = $product_row['product_quantity'];
                             echo 
                                 "<tr>
-                                    <td><img src='product_images/$product_image1' alt='' class='product_img' /></td>
+                                    <td><img src='product_images/$product_image1' alt='' class='product-img' /></td>
                                     <td>$product_title</td>
                                     <td>$product_quantity</td>
                                     <td>$" . $product_price . "</td>

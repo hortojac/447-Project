@@ -1,3 +1,20 @@
+<?php
+  session_start();
+  require_once('../includes/connect.php');
+
+  // retrieve the first name and admin rights of the logged-in user
+  if(isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+        $query = "SELECT first_name, user_image FROM accounts WHERE email = '$email'";
+        $result = $conn->query($query);
+        if($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $first_name = $row['first_name'];
+            $user_image = $row['user_image'];
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +58,7 @@
 			opacity: 0.8;
 		}
         .submit-item:hover {
-            opacity: 0.8;
+            background-color: #6c757d;
         }
         .text-end {
             margin-top: 1vw;
@@ -51,10 +68,13 @@
             width: 100px;
             object-fit: contain;
         }
+        .admin-image:hover {
+            cursor: default;
+        }
         .form-space {
             margin-bottom: 10vh;
         }
-        .product_img {
+        .product-img {
             width: 80px;
             height: 80px;
             object-fit: contain;
@@ -74,8 +94,7 @@
                 <nav class="navbar navbar-expand-lg">
                     <ul class="navbar-nav ">
                         <li class="nav-item">
-                            <a href="" class="nav-link text-color">Welcome Guest</a>
-                            <button><a href="" class="nav-link btn-light btn-text-color">Logout</a></button>
+                            <button><a href="../user_area/logout.php" class="nav-link btn-light btn-text-color">Logout</a></button>
                         </li>
                     </ul>
                 </nav>
@@ -102,12 +121,18 @@
                     <button><a href="index.php?edit_brand" class="btn btn-light btn-text-color">View Brands</a></button>
                     <button><a href="" class="btn btn-light btn-text-color">Orders</a></button>
                     <button><a href="" class="btn btn-light btn-text-color">Payments</a></button>
-                    <button><a href="" class="btn btn-light btn-text-color">All users</a></button>
+                    <button><a href="index.php?get_users" class="btn btn-light btn-text-color">All Users</a></button>
                 </div>
                 <!-- image section -->
                 <div class="col-md-auto text-end">
-                    <a href="#" ><img src="../images/admin1.jpg" alt="" class="admin-image"></a>
-                    <p class="text-color">Admin Name</p>
+                    <div class="d-flex flex-column align-items-center">
+                        <?php 
+                            if(isset($_SESSION['email']) && isset($first_name) && isset($user_image)) { 
+                            echo '<a href="#"><img src="../user_area/profile/'.$user_image.'" alt="" class="admin-image"></a>';
+                            echo '<p class="text-color">Admin: '.$first_name.'</p>';
+                            }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,6 +157,9 @@
                 }
                 if(isset($_GET['all_products'])){
                     include('viewItems.php');
+                }
+                if(isset($_GET['get_users'])){
+                    include('viewUsers.php');
                 }
             ?>
         </div>

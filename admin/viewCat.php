@@ -1,6 +1,5 @@
 <?php
 require_once('../includes/connect.php');
-include('../functions/common_functions.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -30,7 +29,6 @@ error_reporting(E_ALL);
     }
 
 ?>
-
 
 <form action="" method="post" id=""> 
     <table class="table table-bordered text-center">

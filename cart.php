@@ -1,11 +1,23 @@
 <?php
-require_once('includes/connect.php');
-include('functions/common_functions.php');
+  session_start();
+  require_once('./includes/connect.php');
+  include('./functions/common_functions.php');
 
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+  // retrieve the first name and admin rights of the logged-in user
+  if(isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $query = "SELECT first_name, admin_rights FROM accounts WHERE email = '$email'";
+    $result = $conn->query($query);
+    if($result && $result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $first_name = $row['first_name'];
+      $admin_rights = $row['admin_rights'];
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +27,7 @@ error_reporting(E_ALL);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
-    <link rel="icon" href="images/logo.png" class="">
+    <link rel="icon" href="./images/logo.png" class="">
     <!--bootstrap-->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -52,9 +64,13 @@ error_reporting(E_ALL);
       }
       .no-hover:hover {
         color: #ffffff;
+        cursor: default;
       }
       button:hover {
         opacity: 0.8;
+      }
+      .submit-item:hover {
+        background-color: #6c757d;
       }
     </style>
 </head>
@@ -103,17 +119,30 @@ error_reporting(E_ALL);
       <div class="container-fluid">
         <div class="navbar-brand mx-auto text-color no-hover"><h3>Cart</h3></div>
         <div class="d-flex">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a href="./admin/index.php" class="nav-link text-color">Admin</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link text-color">Guest</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link text-color">Login</a>
-            </li>
-          </ul>
+          <?php if(isset($_SESSION['email']) && isset($first_name)) { ?>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a href="#" class="nav-link text-color no-hover">Welcome <?php echo $first_name; ?></a>
+              </li>
+              <?php if($admin_rights == 'yes') { ?>
+                <li class="nav-item">
+                  <a href="./admin/index.php" class="nav-link text-color">Admin</a>
+                </li>
+              <?php } ?>
+              <li class="nav-item">
+                <a href="./user_area/logout.php" class="nav-link text-color">Logout</a>
+              </li>
+            </ul>
+          <?php } else { ?>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a href="#" class="nav-link text-color no-hover">Welcome Guest</a>
+              </li>
+              <li class="nav-item">
+                <a href="./user_area/user_login.php" class="nav-link text-color">Login</a>
+              </li>
+            </ul>
+          <?php } ?>
         </div>
       </div>
     </nav>
@@ -195,8 +224,8 @@ error_reporting(E_ALL);
           </form>
           <!-- subtotal -->
           <div class="d-flex flex-row-reverse mb-5">
-            <a href="main.php"><button class="main-color text-color p-2 border-2 m-1">Continue Shopping</button></a>
-            <a href="#"><button class="main-color text-color p-2 border-2 m-1">Checkout</button></a>
+            <a href="main.php"><button class="main-color text-color submit-item p-2 border-2 m-1">Continue Shopping</button></a>
+            <a href="#"><button class="main-color text-color submit-item p-2 border-2 m-1">Checkout</button></a>
             <h4 class="px-3 text-end m-1">Subtotal: $<strong class="text-success"><?php echo $total_price; ?></strong></h4>
           </div>
       </div>
