@@ -147,76 +147,84 @@
       </div>
     </nav>
 
-    <!-- third child -->
-    <div class="container">
-        <div class="row">
-            <form action="" method="post" id="cartForm"> 
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Remove</th>
-                            <th>Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        global $conn;
-                        $get_ip_add = getIPAddress();
-                        $total_price = 0;
+  <!-- third child -->
+  <div class="container">
+          <div class="row">
+              <form action="" method="post" id="cartForm"> 
+                  <table class="table table-bordered text-center">
+                  <tbody>
+                      <?php
+                          global $conn;
+                          $get_ip_add = getIPAddress();
+                          $total_price = 0;
 
-                        $cart_query = "SELECT * FROM cart_details WHERE ip_address = ?";
-                        $cart_statement = mysqli_prepare($conn, $cart_query);
-                        mysqli_stmt_bind_param($cart_statement, "s", $get_ip_add);
-                        mysqli_stmt_execute($cart_statement);
+                          $cart_query = "SELECT * FROM cart_details WHERE ip_address = ?";
+                          $cart_statement = mysqli_prepare($conn, $cart_query);
+                          mysqli_stmt_bind_param($cart_statement, "s", $get_ip_add);
+                          mysqli_stmt_execute($cart_statement);
+                          $cart_results = mysqli_stmt_get_result($cart_statement);
+                          $num_rows = mysqli_num_rows($cart_results);
+                          if($num_rows > 0){
+                              echo "
+                              <thead>
+                              <tr>
+                                  <th>Image</th>
+                                  <th>Product</th>
+                                  <th>Quantity</th>
+                                  <th>Price</th>
+                                  <th>Remove</th>
+                                  <th>Update</th>
+                              </tr>
+                              </thead>
+                              <tbody>";
 
-                        $cart_results = mysqli_stmt_get_result($cart_statement);
-                        while ($cart_row = mysqli_fetch_array($cart_results)) {
-                            $product_id = $cart_row['product_id'];
-                            $products_query = "SELECT * FROM products WHERE product_id = ?";
-                            $products_statement = mysqli_prepare($conn, $products_query);
-                            mysqli_stmt_bind_param($products_statement, "i", $product_id);
-                            mysqli_stmt_execute($products_statement);
+                          while ($cart_row = mysqli_fetch_array($cart_results)) {
+                              $product_id = $cart_row['product_id'];
+                              $products_query = "SELECT * FROM products WHERE product_id = ?";
+                              $products_statement = mysqli_prepare($conn, $products_query);
+                              mysqli_stmt_bind_param($products_statement, "i", $product_id);
+                              mysqli_stmt_execute($products_statement);
 
-                            $product_results = mysqli_stmt_get_result($products_statement);
-                            while ($product_row = mysqli_fetch_array($product_results)) {
-                                $product_price = $product_row['product_price'];
-                                $product_title = $product_row['product_title'];
-                                $product_image1 = $product_row['product_image1'];
-                                $quantity = $cart_row['quantity'];
-                                $total_price += $product_price * $quantity;
-                                echo 
-                                "<tr>
-                                    <td><img src='admin/product_images/$product_image1' alt='' class='cart_img' /></td>
-                                    <td>$product_title</td>
-                                    <td><input type='text' name='qty[]' value='$quantity' placeholder='' class='form-control w-25 mx-auto'></td>
-                                    <td>$" . $product_price . "</td>";
+                              $product_results = mysqli_stmt_get_result($products_statement);
+                              while ($product_row = mysqli_fetch_array($product_results)) {
+                                  $product_price = $product_row['product_price'];
+                                  $product_title = $product_row['product_title'];
+                                  $product_image1 = $product_row['product_image1'];
+                                  $quantity = $cart_row['quantity'];
+                                  $total_price += $product_price * $quantity;
 
-                                    if (isset($_POST['update_cart'])) {
-                                        $quantities = $_POST['qty'];
-                                        $product_ids = $_POST['product_id'];
-                                        $total_price = 0;
-                                    
-                                        for ($i = 0; $i < count($quantities); $i++) {
-                                            $update_cart = "UPDATE cart_details SET quantity = ? WHERE product_id = ? AND ip_address = ?";
-                                            $update_statement = mysqli_prepare($conn, $update_cart);
-                                            mysqli_stmt_bind_param($update_statement, "iis", $quantities[$i], $product_ids[$i], $get_ip_add);
-                                            mysqli_stmt_execute($update_statement);
-                                            $total_price += $product_price * $quantities[$i]; // Update the total price for each updated quantity
-                                        }
-                                    }                                    
-                                echo
-                                "<td><input type='checkbox' name='removeItem[]' value='$product_id'></td>
-                                <td>
-                                <input type='submit' value='Update Quantity' class='button bg-warning p-2 border-2 m-1' name='update_cart'>
-                                <input type='hidden' name='product_id[]' value='$product_id'>
-                                    <input type='submit' value='Remove' class='bg-danger p-2 border-2 m-1' name='remove_cart'>
-                                </td>
-                                </tr>";             
-                            }
+                                  echo 
+                                  "<tr>
+                                      <td><img src='admin/product_images/$product_image1' alt='' class='cart_img' /></td>
+                                      <td>$product_title</td>
+                                      <td><input type='text' name='qty[]' value='$quantity' placeholder='' class='form-control w-25 mx-auto'></td>
+                                      <td>$" . $product_price . "</td>";
+
+                                      if (isset($_POST['update_cart'])) {
+                                          $quantities = $_POST['qty'];
+                                          $product_ids = $_POST['product_id'];
+                                          $total_price = 0;
+                                      
+                                          for ($i = 0; $i < count($quantities); $i++) {
+                                              $update_cart = "UPDATE cart_details SET quantity = ? WHERE product_id = ? AND ip_address = ?";
+                                              $update_statement = mysqli_prepare($conn, $update_cart);
+                                              mysqli_stmt_bind_param($update_statement, "iis", $quantities[$i], $product_ids[$i], $get_ip_add);
+                                              mysqli_stmt_execute($update_statement);
+                                              $total_price += $product_price * $quantities[$i]; // Update the total price for each updated quantity
+                                          }
+                                      }                                    
+                                  echo
+                                  "<td><input type='checkbox' name='removeItem[]' value='$product_id'></td>
+                                  <td>
+                                  <input type='submit' value='Update Quantity' class='button bg-warning p-2 border-2 m-1' name='update_cart'>
+                                  <input type='hidden' name='product_id[]' value='$product_id'>
+                                      <input type='submit' value='Remove' class='bg-danger p-2 border-2 m-1' name='remove_cart'>
+                                  </td>
+                                  </tr>";     
+                              }
+                          }
+                          }else{
+                            echo "<h2 class='text-danger'>Cart is empty</h2>";
                           }
                       ?>
                   </tbody>
@@ -224,29 +232,32 @@
           </form>
           <!-- subtotal -->
           <div class="d-flex flex-row-reverse mb-5">
-            <a href="main.php"><button class="main-color text-color submit-item p-2 border-2 m-1">Continue Shopping</button></a>
-            <a href="#"><button class="main-color text-color submit-item p-2 border-2 m-1">Checkout</button></a>
-            <h4 class="px-3 text-end m-1">Subtotal: $<strong class="text-success"><?php echo $total_price; ?></strong></h4>
+            <a href="./main.php"><button class="bg-info p-2 border-2 m-1">Continue Shopping</button></a>
+            <a href="#"><button class="bg-info p-2 border-2 m-1">Checkout</button></a>
+            <h4 class="px-3 text-end m-1">Subtotal:$<strong class="text-primary"><?php echo $total_price; ?></strong></h4>
           </div>
       </div>
   </div>
 
   <!-- function to remove item -->
   <?php
-    function remove_cart_item(){
-        global $conn;
-        if(isset($_POST['remove_cart'])){
-            foreach($_POST['removeItem'] as $remove_id){
-                echo $remove_id;
-                $delete_query="Delete from `cart_details` where product_id=$remove_id";
-                $run_delete=mysqli_query($conn,$delete_query);
-                if($run_delete){
-                    echo "<script>window.open('cart.php','_self')</script>";
-                }
+  function remove_cart_item(){
+    global $conn;
+    if(isset($_POST['remove_cart'])){
+        foreach($_POST['removeItem'] as $remove_id){
+            $delete_query="DELETE FROM `cart_details` WHERE product_id = ? AND ip_address = ?";
+            $delete_statement = mysqli_prepare($conn, $delete_query);
+            $get_ip_add = getIPAddress();
+            mysqli_stmt_bind_param($delete_statement, "is", $remove_id, $get_ip_add);
+            mysqli_stmt_execute($delete_statement);
+
+            if(mysqli_stmt_affected_rows($delete_statement) > 0){
+                echo "<script>window.open('cart.php','_self')</script>";
             }
         }
     }
-    echo $remove_item=remove_cart_item();
+  }
+  echo $remove_item=remove_cart_item();
   ?>
   <!-- last child -->
   <div class="main-color p-3 text-center footer">

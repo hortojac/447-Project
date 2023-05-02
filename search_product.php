@@ -188,7 +188,7 @@
         <div class="row">
           <!-- Getting items from database -->
           <?php
-          search_products();
+          search_product();
           get_unique_categories();   
           get_unique_brand(); 
           ?>
