@@ -15,7 +15,7 @@ iBuy is an e-commerce website where users can shop for various products.
 * View all brands.
 * Add a brand.
 * View all categories.
-* Add a Category.
+* Add a category.
 * View all users.
 
 ## Authors
