@@ -15,9 +15,10 @@ if (isset($_POST['create_account'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $phone_number = $_POST['phone_number'];
-    $user_image = $_FILES['user_image']['name'];
-    $img_tmp_name = $_FILES['user_image']['tmp_name'];
     $user_ip = getIPAddress();
+
+    // Hash password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare SELECT query to check if username or email is already taken
     $select_stmt = mysqli_prepare($conn, "SELECT * FROM `accounts` WHERE username = ? OR email = ?");
@@ -37,15 +38,12 @@ if (isset($_POST['create_account'])) {
         }
     } else {
         // Check if all fields are filled
-        if ($first_name == '' || $last_name == '' || $password == '' || $email == '' || $username == '' || $phone_number == '' || $user_image == '') {
+        if ($first_name == '' || $last_name == '' || $password == '' || $email == '' || $username == '' || $phone_number == '') {
             echo "<script>alert('All fields required')</script>";
         } else {
             // Prepare INSERT query to add new user
-            $insert_stmt = $conn->prepare("INSERT INTO `accounts` (username, first_name, last_name, email, password, phone_number, user_image, user_ip, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-            $insert_stmt->bind_param("ssssssss", $username, $first_name, $last_name, $email, $password, $phone_number, $user_image, $user_ip);
-            
-            // Upload the image
-            move_uploaded_file($img_tmp_name, "./profile/$user_image");
+            $insert_stmt = $conn->prepare("INSERT INTO `accounts` (username, first_name, last_name, email, password, phone_number, user_ip, date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+            $insert_stmt->bind_param("sssssss", $username, $first_name, $last_name, $email, $hashed_password, $phone_number, $user_ip);
 
             // Execute the prepared statement
             $result_query = $insert_stmt->execute();
@@ -117,12 +115,6 @@ if (isset($_POST['create_account'])) {
             <div class="form-outline mb-4 w-50 m-auto">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" name="email" id="email" class="form-control" placeholder="Enter email" autocomplete="off" required="required">
-            </div>
-
-            <!-- userImage -->
-            <div class="form-outline mb-4 w-50 m-auto">
-                <label for="user_image" class="form-label">Profile Picture</label>
-                <input type="file" name="user_image" id="user_image" class="form-control" required="required">
             </div>
 
             <!-- username -->

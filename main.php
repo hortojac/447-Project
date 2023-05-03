@@ -82,6 +82,10 @@
         margin-top: 10px;
         object-fit: contain;
       }
+      .logo{
+        width: 7%;
+        height: 7%;
+      }
     </style>
 </head>
 <body>
@@ -115,7 +119,7 @@
             <form class="d-flex" action="search_product.php" method="get">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
               <!-- <button class="btn btn-outline-light" type="submit">Search</button> -->
-              <input type="submit" value ="Search" class="btn btn-outline-light" name="search_data_product">
+              <input type="submit" value ="Search" class="btn btn-outline-light" style="width:100px;" name="search_data_product">
             </form>
           </div>
       </div>
@@ -161,7 +165,7 @@
     <div class="row">
       <div class="col-md-2 bg-light p-0">
         <!-- Categories -->
-        <ul class="navbar-nav me-auto text-center">
+        <ul class="navbar-nav me-auto text-center" style="overflow: hidden;">
           <li class="bg-dark text-color">
             <h4>Categories</h4>
           </li>
@@ -172,7 +176,7 @@
         </ul>
 
         <!-- Brands -->
-        <ul class="navbar-nav me-auto text-center">
+        <ul class="navbar-nav me-auto text-center" style="overflow: hidden;">
           <li class="bg-dark text-color">
             <h4>Brands</h4>
           </li>

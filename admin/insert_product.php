@@ -16,13 +16,9 @@ if (isset($_POST['insert_product'])) {
 
     // Accessing images
     $product_image1 = $_FILES['product_image1']['name'];
-    //$product_image2 = $_FILES['product_image2']['name'];
-    //$product_image3 = $_FILES['product_image3']['name'];
 
     // Image tmp name
     $temp_image1 = $_FILES['product_image1']['tmp_name'];
-    // $temp_image2 = $_FILES['product_image2']['tmp_name'];
-    // $temp_image3 = $_FILES['product_image3']['tmp_name'];
 
     // Check if empty
     if ($product_title == '' || $description == '' || $product_quantity == '' || $product_keywords == '' || $product_category == '' ||
@@ -31,8 +27,6 @@ if (isset($_POST['insert_product'])) {
         exit();
     } else {
         move_uploaded_file($temp_image1, "./product_images/$product_image1");
-        // move_uploaded_file($temp_image2, "./product_images/$product_image2");
-        // move_uploaded_file($temp_image3, "./product_images/$product_image3");
 
         // Prepare insert query
         $stmt = $conn->prepare("INSERT INTO `products` (product_title, product_quantity, product_description,

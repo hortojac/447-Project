@@ -25,6 +25,7 @@ error_reporting(E_ALL);
                         <th>Email</th>
                         <th>Username</th>
                         <th>Phone Number</th>
+                        <th>Admin Rights</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,14 +42,19 @@ error_reporting(E_ALL);
                             $email = $user_row['email'];
                             $username = $user_row['username'];
                             $phone_number = $user_row['phone_number'];
-                            echo 
-                                "<tr>
+                            $admin_rights = $user_row['admin_rights'];
+                            echo "<tr>
                                     <td>$first_name</td>
                                     <td>$last_name</td>
                                     <td>$email</td>
                                     <td>$username</td>
-                                    <td>$phone_number</td>
-                                </tr>";
+                                    <td>$phone_number</td>";
+                            if ($admin_rights === 'yes') {
+                                echo "<td>$admin_rights</td>";
+                            } else {
+                                echo "<td>no</td>";
+                            }
+                            echo "</tr>";
                         }
                     ?>
                 </tbody>

@@ -5,12 +5,11 @@
   // retrieve the first name and admin rights of the logged-in user
   if(isset($_SESSION['email'])) {
         $email = $_SESSION['email'];
-        $query = "SELECT first_name, user_image FROM accounts WHERE email = '$email'";
+        $query = "SELECT first_name FROM accounts WHERE email = '$email'";
         $result = $conn->query($query);
         if($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $first_name = $row['first_name'];
-            $user_image = $row['user_image'];
         }
     }
 ?>
@@ -82,6 +81,10 @@
         .delete-btn:hover {
             opacity: 0.8;
         }
+        .logo{
+            width: 7%;
+            height: 7%;
+        }
     </style>
 </head>
 <body>
@@ -127,8 +130,7 @@
                 <div class="col-md-auto text-end">
                     <div class="d-flex flex-column align-items-center">
                         <?php 
-                            if(isset($_SESSION['email']) && isset($first_name) && isset($user_image)) { 
-                            echo '<a href="#"><img src="../user_area/profile/'.$user_image.'" alt="" class="admin-image"></a>';
+                            if(isset($_SESSION['email']) && isset($first_name)) { 
                             echo '<p class="text-color">Admin: '.$first_name.'</p>';
                             }
                         ?>

@@ -72,6 +72,10 @@
       .submit-item:hover {
         background-color: #6c757d;
       }
+      .logo{
+        width: 7%;
+        height: 7%;
+      }
     </style>
 </head>
 <body>
