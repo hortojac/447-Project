@@ -5,15 +5,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//getting products
+// getting products
 function getproducts(){
     global $conn;
     if(!isset($_GET['category'])){
         if(!isset($_GET['brand'])){
             $select_query="select * from `products` order by product_title LIMIT 0,9";
             $result_query=mysqli_query($conn,$select_query);
-            // $row=mysqli_fetch_assoc($result_query);
-            // echo $row['product_title'];
+            
             while($row=mysqli_fetch_assoc($result_query)){
             $product_id=$row['product_id'];
             $product_title=$row['product_title'];
@@ -44,7 +43,7 @@ function getproducts(){
     }
 }
 
-//getting all products
+// getting all products
 function get_all_products(){
     global $conn;
 
@@ -52,8 +51,7 @@ function get_all_products(){
         if(!isset($_GET['brand'])){
             $select_query="select * from `products` order by rand()";
             $result_query=mysqli_query($conn,$select_query);
-            // $row=mysqli_fetch_assoc($result_query);
-            // echo $row['product_title'];
+            
             while($row=mysqli_fetch_assoc($result_query)){
             $product_id=$row['product_id'];
             $product_title=$row['product_title'];
@@ -84,7 +82,7 @@ function get_all_products(){
     }
 }
 
-//get specific category using JOIN
+// get specific category using JOIN
 function get_unique_categories() {
     global $conn;
     if (isset($_GET['category'])) {
@@ -96,7 +94,7 @@ function get_unique_categories() {
         mysqli_stmt_bind_param($stmt, "i", $category_id);
         mysqli_stmt_execute($stmt);
         $result_query = mysqli_stmt_get_result($stmt);
-
+        
         if (mysqli_num_rows($result_query) > 0) {
             while ($row = mysqli_fetch_assoc($result_query)) {
                 $product_id = $row['product_id'];
@@ -132,7 +130,7 @@ function get_unique_categories() {
     }
 }
 
-//get specific brands
+// get specific brands
 function get_unique_brand(){
     global $conn;
     if (isset($_GET['brand'])) {
@@ -179,13 +177,12 @@ function get_unique_brand(){
     }
 }
 
-//left nav bar brands
+// left nav bar brands
 function getbrands(){
     global $conn;
     $select_brands="SELECT * FROM `brands`";
     $result_brands=mysqli_query($conn,$select_brands);
-    // $row_data=mysqli_fetch_assoc($result_brands);
-    // echo $row_data['brand_title'];
+
     while($row_data=mysqli_fetch_assoc($result_brands)){
       $brand_title=$row_data['brand_title'];
       $brand_id=$row_data['brand_id'];
@@ -193,7 +190,7 @@ function getbrands(){
     }
 }
 
-//left nav bar categories
+// left nav bar categories
 function getcategory(){
     global $conn;
     $select_categories="SELECT * FROM `categories`";
@@ -205,7 +202,7 @@ function getcategory(){
     }
 }
 
-//search products
+// search products
 function search_product(){
     global $conn;
     if(isset($_GET['search_data_product'])){
@@ -246,24 +243,24 @@ function search_product(){
     }
 }
 
-//get ip address function
+// get ip address function
 function getIPAddress() {  
-    //whether ip is from the share internet  
+    // if ip is from the share internet  
      if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
                 $ip = $_SERVER['HTTP_CLIENT_IP'];  
         }  
-    //whether ip is from the proxy  
+    // if ip is from the proxy  
     elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
                 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
      }  
-//whether ip is from the remote address  
+// if ip is from the remote address  
     else{  
              $ip = $_SERVER['REMOTE_ADDR'];  
      }  
      return $ip;  
 }  
 
-//cart function
+// cart function
 function cart(){
     if(isset($_GET['add_to_cart'])){
         global $conn;
@@ -274,7 +271,6 @@ function cart(){
         if (mysqli_num_rows($result_query)>0){
             echo "<script>alert('Item already in cart')</script>";
             echo "<script>window.open('main.php','_self')</script>";
-
         }else{
             $insert_query="insert into `cart_details` (product_id,ip_address, quantity) values ($get_product_id,'$get_ip_add',1)";
             $result_insert = mysqli_query($conn, $insert_query);
@@ -284,7 +280,7 @@ function cart(){
     }
 }
 
-//cart item number
+// cart item number
 function cart_item(){
     if(isset($_GET['add_to_cart'])){
         global $conn;
@@ -292,7 +288,6 @@ function cart_item(){
         $select_query="Select * from `cart_details` where ip_address='$get_ip_add'";
         $result_query = mysqli_query($conn,$select_query);
         $count_cart_items=mysqli_num_rows($result_query);
-
     }else{
         global $conn;
         $get_ip_add = getIPAddress();
@@ -303,7 +298,7 @@ function cart_item(){
     echo $count_cart_items;
 }
 
-//total price
+// total price
 function total_cart_price(){
     global $conn;
     $get_ip_add = getIPAddress();
